@@ -14,7 +14,6 @@ import { UserModule } from './user/user.module';
   providers: [AppService],
 })
 
-//  Nhớ có cả connection
 
 export class AppModule {
   constructor(private readonly connection: Connection) { }
