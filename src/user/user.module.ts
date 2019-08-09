@@ -1,12 +1,21 @@
+import { APP_FILTER } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
 import { UserController } from './user.controller';
+import { User } from './user.entity';
 import { UserService } from './user.service';
 
+import { HttpExceptionFilter } from './../shared/http-error.filter';
+
 @Module({
-    imports: [TypeOrmModule.forFeature([User])], // imports Entity(Model)
-    providers: [UserService], // providers: [ arr Services using ]
-    controllers: [UserController], // controllers : [array Controller using]
+    imports: [TypeOrmModule.forFeature([User])],
+    providers: [
+        UserService,
+        {
+            provide: APP_FILTER,
+            useClass: HttpExceptionFilter,
+        }
+    ],
+    controllers: [UserController],
 })
 export class UserModule {}
