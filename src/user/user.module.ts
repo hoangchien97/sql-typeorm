@@ -9,13 +9,7 @@ import { HttpExceptionFilter } from './../shared/http-error.filter';
 
 @Module({
     imports: [TypeOrmModule.forFeature([User])],
-    providers: [
-        UserService,
-        {
-            provide: APP_FILTER,
-            useClass: HttpExceptionFilter,
-        }
-    ],
+    providers: [UserService],
     controllers: [UserController],
 })
 export class UserModule {}
