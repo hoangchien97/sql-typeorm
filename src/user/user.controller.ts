@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UsePipes } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IUserDTO } from './user.dto';
+import { ValidationPipe } from './../shared/validation.pipe';
 
 @Controller('user')
 export class UserController {
@@ -16,12 +17,14 @@ export class UserController {
     }
 
     @Post()
+    @UsePipes(new ValidationPipe())
     createUser(@Body() user: IUserDTO) {
         return this.userService.createUser(user);
     }
 
     @Put(':id')
-    updateUser(@Param('id') id, @Body() data: IUserDTO) {
+    @UsePipes(new ValidationPipe())
+    updateUser(@Param('id') id, @Body() data: Partial<IUserDTO>) {
         return this.userService.updateUser(id, data);
     }
 

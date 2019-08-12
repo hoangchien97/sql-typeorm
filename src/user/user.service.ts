@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository, UpdateResult, DeleteResult } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IUserDTO } from './user.dto';
+import { IUserDTO, IUserRO } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -10,19 +10,19 @@ export class UserService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
     ) { }
-    async getAll(): Promise<User[]> {
+    async getAll(): Promise<IUserRO[]> {
         return await this.userRepository.find();
     }
 
-    async getOne(id: number): Promise<User> {
+    async getOne(id: number): Promise<IUserRO> {
         return await this.userRepository.findOne({where: {id}});
     }
 
-    async createUser(user: IUserDTO): Promise<User> {
+    async createUser(user: IUserDTO): Promise<IUserRO> {
         return await this.userRepository.save(user);
     }
 
-    async updateUser(id: number, data: IUserDTO): Promise<User> { // Partial<IUserDTO>
+    async updateUser(id: number, data: Partial<IUserDTO>): Promise<IUserRO> { // Partial<IUserDTO>
         // let user = await this.userRepository.findOne({where: {id}});
         // if (!user) {
         //     throw new HttpException('Not Found', HttpStatus.NOT_FOUND);

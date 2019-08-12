@@ -10,11 +10,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     const errResponse = {
-        statusCode: status,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-        method: request.method,
-        message: exception.message.error || exception.message || null,
+      statusCode: status,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+      method: request.method,
+      message: exception.message.error || exception.message || null,
     };
 
     Logger.error(
@@ -23,6 +23,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       'ExceptionFilter'
     )
 
-    response.status(status).json({errResponse});
-    }
+    response.status(status).json({ errResponse });
+  }
 }
